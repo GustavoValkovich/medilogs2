@@ -1,17 +1,15 @@
 {
   "name": "medilogs2",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "nodemon src/app.ts",
-    "dev:js": "node app.js",
+    "dev": "npx ts-node src/app.ts",
+    "dev:watch": "npx nodemon --exec \"npx ts-node src/app.ts\"",
     "clean": "rm -rf dist",
-    "build:watch": "tsc --watch",
-    "lint": "echo 'Linting with TypeScript compiler'",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -27,7 +25,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.9",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
