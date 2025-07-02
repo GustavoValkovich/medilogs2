@@ -68,7 +68,7 @@ curl -X POST http://localhost:3002/api/pacientes \
     "obra_social": "OSDE",
     "mail": "ana.garcia@email.com",
     "medico_id": 1,
-    "importante": true
+    "importante": "Paciente diabética, requiere seguimiento especial"
   }'
 ```
 
@@ -101,7 +101,7 @@ curl -X POST http://localhost:3002/api/auth/login \
 - `nombre` (varchar)
 - `documento` (varchar)
 - `nacimiento` (date)
-- `importante` (boolean)
+- `importante` (varchar(100)) - Texto breve para casos especiales
 - `sexo` (varchar)
 - `obra_social` (varchar)
 - `mail` (varchar)

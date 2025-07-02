@@ -144,7 +144,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Ana García\",\n  \"documento\": \"12345678A\",\n  \"nacimiento\": \"1990-05-15\",\n  \"sexo\": \"F\",\n  \"obra_social\": \"OSDE\",\n  \"mail\": \"ana.garcia@email.com\",\n  \"medico_id\": 1,\n  \"importante\": true\n}"
+              "raw": "{\n  \"nombre\": \"Ana García\",\n  \"documento\": \"12345678A\",\n  \"nacimiento\": \"1990-05-15\",\n  \"sexo\": \"F\",\n  \"obra_social\": \"OSDE\",\n  \"mail\": \"ana.garcia@email.com\",\n  \"medico_id\": 1,\n  \"importante\": \"Paciente diabética, requiere seguimiento especial\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/pacientes",
@@ -177,7 +177,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Ana María García\",\n  \"obra_social\": \"Swiss Medical\",\n  \"importante\": false\n}"
+              "raw": "{\n  \"nombre\": \"Ana María García\",\n  \"obra_social\": \"Swiss Medical\",\n  \"importante\": \"Paciente con alergia a penicilina\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/pacientes/1",

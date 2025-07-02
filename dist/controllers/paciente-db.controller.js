@@ -77,6 +77,14 @@ class PacienteController {
                 res.status(400).json(response);
                 return;
             }
+            if (pacienteData.importante && pacienteData.importante.length > 100) {
+                const response = {
+                    success: false,
+                    error: 'El campo importante no puede exceder 100 caracteres'
+                };
+                res.status(400).json(response);
+                return;
+            }
             const pacienteExistente = await pacienteRepository.findByDocumento(pacienteData.documento);
             if (pacienteExistente) {
                 const response = {
@@ -111,6 +119,14 @@ class PacienteController {
                 const response = {
                     success: false,
                     error: 'ID de paciente inválido'
+                };
+                res.status(400).json(response);
+                return;
+            }
+            if (updateData.importante && updateData.importante.length > 100) {
+                const response = {
+                    success: false,
+                    error: 'El campo importante no puede exceder 100 caracteres'
                 };
                 res.status(400).json(response);
                 return;

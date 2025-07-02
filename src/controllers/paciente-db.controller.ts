@@ -96,6 +96,16 @@ export class PacienteController {
         return;
       }
 
+      // Validar campo importante (máximo 100 caracteres)
+      if (pacienteData.importante && pacienteData.importante.length > 100) {
+        const response: ApiResponse<null> = {
+          success: false,
+          error: 'El campo importante no puede exceder 100 caracteres'
+        };
+        res.status(400).json(response);
+        return;
+      }
+
       // Verificar si ya existe un paciente con el mismo documento
       const pacienteExistente = await pacienteRepository.findByDocumento(pacienteData.documento);
       if (pacienteExistente) {
@@ -135,6 +145,16 @@ export class PacienteController {
         const response: ApiResponse<null> = {
           success: false,
           error: 'ID de paciente inválido'
+        };
+        res.status(400).json(response);
+        return;
+      }
+
+      // Validar campo importante si se proporciona (máximo 100 caracteres)
+      if (updateData.importante && updateData.importante.length > 100) {
+        const response: ApiResponse<null> = {
+          success: false,
+          error: 'El campo importante no puede exceder 100 caracteres'
         };
         res.status(400).json(response);
         return;

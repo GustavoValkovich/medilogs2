@@ -183,7 +183,12 @@ export class PacienteRepository {
 
   async getPacientesImportantes(): Promise<PacienteDB[]> {
     const result = await query(`
-      SELECT * FROM paciente WHERE importante = true ORDER BY nombre
+      SELECT * FROM paciente 
+      WHERE importante IS NOT NULL 
+        AND importante != '' 
+        AND importante != 'false' 
+        AND importante != 'true'
+      ORDER BY nombre
     `);
 
     return result.rows;

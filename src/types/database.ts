@@ -7,7 +7,7 @@ export interface PacienteDB {
   nombre?: string;
   documento?: string;
   nacimiento?: Date;
-  importante?: boolean;
+  importante?: string; // Campo de texto hasta 100 caracteres
   sexo?: string;
   obra_social?: string;
   mail?: string;
@@ -39,7 +39,7 @@ export interface CreatePacienteRequest {
   obra_social?: string;
   mail?: string;
   medico_id?: number;
-  importante?: boolean;
+  importante?: string; // Texto hasta 100 caracteres
 }
 
 export interface UpdatePacienteRequest {
@@ -50,7 +50,7 @@ export interface UpdatePacienteRequest {
   obra_social?: string;
   mail?: string;
   medico_id?: number;
-  importante?: boolean;
+  importante?: string; // Texto hasta 100 caracteres
 }
 
 export interface CreateConsultaRequest {

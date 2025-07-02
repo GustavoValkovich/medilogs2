@@ -4,7 +4,7 @@ export interface PacienteDB {
     nombre?: string;
     documento?: string;
     nacimiento?: Date;
-    importante?: boolean;
+    importante?: string;
     sexo?: string;
     obra_social?: string;
     mail?: string;
@@ -30,7 +30,7 @@ export interface CreatePacienteRequest {
     obra_social?: string;
     mail?: string;
     medico_id?: number;
-    importante?: boolean;
+    importante?: string;
 }
 export interface UpdatePacienteRequest {
     nombre?: string;
@@ -40,7 +40,7 @@ export interface UpdatePacienteRequest {
     obra_social?: string;
     mail?: string;
     medico_id?: number;
-    importante?: boolean;
+    importante?: string;
 }
 export interface CreateConsultaRequest {
     paciente_id: number;
