@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { PacienteController } from '../controllers/paciente.controller';
+import { ConsultaController } from '../controllers/consulta.controller';
 
 const router = Router();
 const pacienteController = new PacienteController();
+const consultaController = new ConsultaController();
 
 // GET /api/pacientes - Obtener todos los pacientes (con paginación y búsqueda)
 router.get('/', pacienteController.getAllPacientes.bind(pacienteController));
+
+// GET /api/pacientes/:id/consultas - Obtener consultas de un paciente específico
+router.get('/:id/consultas', consultaController.getConsultasByPaciente.bind(consultaController));
 
 // GET /api/pacientes/:id - Obtener un paciente por ID
 router.get('/:id', pacienteController.getPacienteById.bind(pacienteController));

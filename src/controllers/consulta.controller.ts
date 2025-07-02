@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ConsultaRepository } from '../repositories/consulta.repository';
 import { 
   ConsultaMedica, 
   CreateConsultaRequest, 
@@ -7,71 +8,6 @@ import {
   PaginatedResponse,
   EstadoConsulta 
 } from '../types';
-
-// Simulamos una base de datos en memoria
-class ConsultaRepository {
-  private consultas: ConsultaMedica[] = [];
-  private nextId = 1;
-
-  async findAll(): Promise<ConsultaMedica[]> {
-    return this.consultas;
-  }
-
-  async findById(id: string): Promise<ConsultaMedica | null> {
-    return this.consultas.find(c => c.id === id) || null;
-  }
-
-  async findByPacienteId(pacienteId: string): Promise<ConsultaMedica[]> {
-    return this.consultas.filter(c => c.pacienteId === pacienteId);
-  }
-
-  async create(consultaData: CreateConsultaRequest): Promise<ConsultaMedica> {
-    const nuevaConsulta: ConsultaMedica = {
-      id: this.nextId.toString(),
-      ...consultaData,
-      fecha: new Date(consultaData.fecha),
-      sintomas: consultaData.sintomas || [],
-      signosVitales: consultaData.signosVitales || {},
-      estado: EstadoConsulta.PROGRAMADA
-    };
-    
-    this.consultas.push(nuevaConsulta);
-    this.nextId++;
-    return nuevaConsulta;
-  }
-
-  async update(id: string, updateData: UpdateConsultaRequest): Promise<ConsultaMedica | null> {
-    const index = this.consultas.findIndex(c => c.id === id);
-    if (index === -1) return null;
-
-    // Convertir fechas si están presentes
-    const processedUpdateData: any = { ...updateData };
-    if (processedUpdateData.proximaCita) {
-      processedUpdateData.proximaCita = new Date(processedUpdateData.proximaCita);
-    }
-
-    this.consultas[index] = { ...this.consultas[index], ...processedUpdateData };
-    return this.consultas[index];
-  }
-
-  async delete(id: string): Promise<boolean> {
-    const index = this.consultas.findIndex(c => c.id === id);
-    if (index === -1) return false;
-
-    this.consultas.splice(index, 1);
-    return true;
-  }
-
-  async findByDateRange(fechaInicio: Date, fechaFin: Date): Promise<ConsultaMedica[]> {
-    return this.consultas.filter(c => 
-      c.fecha >= fechaInicio && c.fecha <= fechaFin
-    );
-  }
-
-  async findByEstado(estado: EstadoConsulta): Promise<ConsultaMedica[]> {
-    return this.consultas.filter(c => c.estado === estado);
-  }
-}
 
 const consultaRepository = new ConsultaRepository();
 
@@ -292,7 +228,7 @@ export class ConsultaController {
         return;
       }
 
-      const consultaActualizada = await consultaRepository.update(id, { estado });
+      const consultaActualizada = await consultaRepository.updateEstado(id, estado);
 
       if (!consultaActualizada) {
         const response: ApiResponse<null> = {

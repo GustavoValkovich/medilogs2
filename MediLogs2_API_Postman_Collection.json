@@ -1,0 +1,407 @@
+{
+  "info": {
+    "name": "MediLogs2 API - PostgreSQL",
+    "description": "Colección completa para probar la API de MediLogs2 con PostgreSQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health & Info",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "API Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api",
+              "host": ["{{base_url}}"],
+              "path": ["api"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Médicos",
+      "item": [
+        {
+          "name": "Listar Médicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/medicos",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos"]
+            }
+          }
+        },
+        {
+          "name": "Crear Médico",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Dr. Juan Pérez\",\n  \"email\": \"juan.perez@hospital.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/medicos",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Médico por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/medicos/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Médico",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Dr. Juan Carlos Pérez\",\n  \"email\": \"juan.carlos.perez@hospital.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/medicos/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Médico",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/medicos/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Listar Pacientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pacientes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes"]
+            }
+          }
+        },
+        {
+          "name": "Crear Paciente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana García\",\n  \"documento\": \"12345678A\",\n  \"nacimiento\": \"1990-05-15\",\n  \"sexo\": \"F\",\n  \"obra_social\": \"OSDE\",\n  \"mail\": \"ana.garcia@email.com\",\n  \"medico_id\": 1,\n  \"importante\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pacientes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Paciente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pacientes/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Paciente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana María García\",\n  \"obra_social\": \"Swiss Medical\",\n  \"importante\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pacientes/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Paciente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pacientes/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Pacientes Importantes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pacientes/especiales/importantes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes", "especiales", "importantes"]
+            }
+          }
+        },
+        {
+          "name": "Pacientes por Médico",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/medicos/1/pacientes",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicos", "1", "pacientes"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Listar Consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/consultas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas"]
+            }
+          }
+        },
+        {
+          "name": "Crear Consulta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paciente_id\": 1,\n  \"fecha_historia\": \"2024-01-15\",\n  \"historia\": \"Paciente presenta dolor de cabeza recurrente. Se recomienda descanso y seguimiento.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/consultas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Consulta por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/consultas/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Consulta",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"historia\": \"Paciente presenta dolor de cabeza recurrente. Se recomienda descanso, analgésicos y seguimiento en 1 semana.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/consultas/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Consulta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/consultas/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Consultas por Paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/pacientes/1/consultas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pacientes", "1", "consultas"]
+            }
+          }
+        },
+        {
+          "name": "Últimas Consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/consultas/especiales/ultimas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas", "especiales", "ultimas"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/consultas/especiales/buscar?q=dolor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "consultas", "especiales", "buscar"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "dolor"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan.perez@hospital.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login - Password Incorrecto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"juan.perez@hospital.com\",\n  \"password\": \"wrongpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3002",
+      "type": "string"
+    }
+  ]
+}

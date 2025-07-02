@@ -1,48 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PacienteController = void 0;
-class PacienteRepository {
-    constructor() {
-        this.pacientes = [];
-        this.nextId = 1;
-    }
-    async findAll() {
-        return this.pacientes.filter(p => p.activo);
-    }
-    async findById(id) {
-        return this.pacientes.find(p => p.id === id && p.activo) || null;
-    }
-    async create(pacienteData) {
-        const nuevoPaciente = {
-            id: this.nextId.toString(),
-            ...pacienteData,
-            fechaNacimiento: new Date(pacienteData.fechaNacimiento),
-            fechaRegistro: new Date(),
-            activo: true
-        };
-        this.pacientes.push(nuevoPaciente);
-        this.nextId++;
-        return nuevoPaciente;
-    }
-    async update(id, updateData) {
-        const index = this.pacientes.findIndex(p => p.id === id && p.activo);
-        if (index === -1)
-            return null;
-        this.pacientes[index] = { ...this.pacientes[index], ...updateData };
-        return this.pacientes[index];
-    }
-    async delete(id) {
-        const index = this.pacientes.findIndex(p => p.id === id && p.activo);
-        if (index === -1)
-            return false;
-        this.pacientes[index].activo = false;
-        return true;
-    }
-    async findByDocumento(numeroDocumento) {
-        return this.pacientes.find(p => p.numeroDocumento === numeroDocumento && p.activo) || null;
-    }
-}
-const pacienteRepository = new PacienteRepository();
+const paciente_repository_1 = require("../repositories/paciente.repository");
+const pacienteRepository = new paciente_repository_1.PacienteRepository();
 class PacienteController {
     async getAllPacientes(req, res) {
         try {

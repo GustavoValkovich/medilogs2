@@ -5,8 +5,11 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
+    "start:pg": "node dist/app-postgresql.js",
     "dev": "npx ts-node src/app.ts",
+    "dev:pg": "npx ts-node src/app-postgresql.ts",
     "dev:watch": "npx nodemon --exec \"npx ts-node src/app.ts\"",
+    "dev:watch:pg": "npx nodemon --exec \"npx ts-node src/app-postgresql.ts\"",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +24,6 @@
     "url": "https://github.com/GustavoValkovich/medilogs2/issues"
   },
   "homepage": "https://github.com/GustavoValkovich/medilogs2#readme",
-  "description": "",
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
@@ -31,7 +33,17 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/pg": "^8.15.4",
+    "@types/sqlite3": "^3.1.11",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
-  }
+    "dotenv": "^17.0.1",
+    "express": "^4.18.2",
+    "pg": "^8.16.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  },
+  "types": "./dist/app.d.ts",
+  "description": ""
 }

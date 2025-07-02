@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { PacienteRepository } from '../repositories/paciente.repository';
 import { 
   Paciente, 
   CreatePacienteRequest, 
@@ -7,54 +8,6 @@ import {
   TipoDocumento,
   Sexo 
 } from '../types';
-
-// Simulamos una base de datos en memoria (deberías reemplazar esto con tu base de datos real)
-class PacienteRepository {
-  private pacientes: Paciente[] = [];
-  private nextId = 1;
-
-  async findAll(): Promise<Paciente[]> {
-    return this.pacientes.filter(p => p.activo);
-  }
-
-  async findById(id: string): Promise<Paciente | null> {
-    return this.pacientes.find(p => p.id === id && p.activo) || null;
-  }
-
-  async create(pacienteData: CreatePacienteRequest): Promise<Paciente> {
-    const nuevoPaciente: Paciente = {
-      id: this.nextId.toString(),
-      ...pacienteData,
-      fechaNacimiento: new Date(pacienteData.fechaNacimiento),
-      fechaRegistro: new Date(),
-      activo: true
-    };
-    
-    this.pacientes.push(nuevoPaciente);
-    this.nextId++;
-    return nuevoPaciente;
-  }
-
-  async update(id: string, updateData: Partial<Paciente>): Promise<Paciente | null> {
-    const index = this.pacientes.findIndex(p => p.id === id && p.activo);
-    if (index === -1) return null;
-
-    this.pacientes[index] = { ...this.pacientes[index], ...updateData };
-    return this.pacientes[index];
-  }
-
-  async delete(id: string): Promise<boolean> {
-    const index = this.pacientes.findIndex(p => p.id === id && p.activo);
-    if (index === -1) return false;
-
-    this.pacientes[index].activo = false;
-    return true;
-  }
-
-  async findByDocumento(numeroDocumento: string): Promise<Paciente | null> {
-    return this.pacientes.find(p => p.numeroDocumento === numeroDocumento && p.activo) || null;
-  }
-}
 
 const pacienteRepository = new PacienteRepository();
 

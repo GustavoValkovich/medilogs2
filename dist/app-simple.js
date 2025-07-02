@@ -12,35 +12,17 @@ app.get('/health', (req, res) => {
     res.json({
         status: 'OK',
         timestamp: new Date().toISOString(),
-        version: '2.0.0',
-        message: 'MediLogs API TypeScript está funcionando correctamente'
+        service: 'medilogs2-api'
     });
 });
 app.get('/api/test', (req, res) => {
-    res.json({
-        success: true,
-        message: 'API de prueba funcionando',
-        data: {
-            timestamp: new Date().toISOString(),
-            version: '2.0.0'
-        }
-    });
-});
-app.use('*', (req, res) => {
-    res.status(404).json({
-        success: false,
-        error: 'Ruta no encontrada',
-        availableRoutes: {
-            health: '/health',
-            test: '/api/test'
-        }
-    });
+    res.json({ message: 'TypeScript API funcionando correctamente!' });
 });
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor MediLogs TypeScript corriendo en puerto ${PORT}`);
-    console.log(`📊 Health check disponible en: http://localhost:${PORT}/health`);
-    console.log(`🧪 API de prueba: http://localhost:${PORT}/api/test`);
+    console.log(`🚀 Servidor medilogs2 corriendo en puerto ${PORT}`);
+    console.log(`📋 Health check: http://localhost:${PORT}/health`);
+    console.log(`🔧 Test endpoint: http://localhost:${PORT}/api/test`);
 });
 exports.default = app;
 //# sourceMappingURL=app-simple.js.map
