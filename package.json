@@ -1,18 +1,23 @@
 {
   "name": "medilogs2",
   "version": "1.0.0",
-  "main": "dist/app.js",
+  "main": "dist/core/app.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/app.js",
-    "start:pg": "node dist/app-postgresql.js",
-    "dev": "npx ts-node src/app.ts",
-    "dev:pg": "npx ts-node src/app-postgresql.ts",
-    "dev:watch": "npx nodemon --exec \"npx ts-node src/app.ts\"",
-    "dev:watch:pg": "npx nodemon --exec \"npx ts-node src/app-postgresql.ts\"",
+    "start": "node dist/core/server.js",
+    "start:prod": "NODE_ENV=production node dist/core/server.js",
+    "dev": "npx ts-node src/core/server.ts",
+    "dev:clean": "npm run clean && npm run dev",
+    "dev:watch": "npx nodemon --exec \"npx ts-node src/core/server.ts\"",
     "clean": "rm -rf dist",
+    "lint": "echo \"Linting not configured yet\"",
     "type-check": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Tests not configured yet\"",
+    "migrate": "echo \"Migrations not configured yet\"",
+    "seed": "echo \"Seeding not configured yet\"",
+    "docker:build": "docker build -t medilogs2 .",
+    "docker:run": "docker run -p 3000:3000 medilogs2",
+    "audit:fix": "npm audit fix"
   },
   "repository": {
     "type": "git",
@@ -25,6 +30,7 @@
   },
   "homepage": "https://github.com/GustavoValkovich/medilogs2#readme",
   "devDependencies": {
+    "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.9",
@@ -37,9 +43,12 @@
     "@types/pg": "^8.15.4",
     "@types/sqlite3": "^3.1.11",
     "bcrypt": "^6.0.0",
+    "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0",
     "pg": "^8.16.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
