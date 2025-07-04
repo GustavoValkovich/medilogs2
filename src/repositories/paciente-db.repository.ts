@@ -84,6 +84,22 @@ export class PacienteRepository {
       importante
     } = pacienteData;
 
+    // Validar que los campos requeridos estén presentes
+    if (!nombre || !documento || !nacimiento) {
+      throw new Error('Los campos nombre, documento y nacimiento son requeridos');
+    }
+
+    // Procesar fecha de nacimiento de manera segura
+    let fechaNacimiento: Date;
+    try {
+      fechaNacimiento = new Date(nacimiento);
+      if (isNaN(fechaNacimiento.getTime())) {
+        throw new Error('Fecha de nacimiento inválida');
+      }
+    } catch (error) {
+      throw new Error(`Error al procesar fecha de nacimiento: ${nacimiento}`);
+    }
+
     const result = await query(`
       INSERT INTO paciente (
         nombre, documento, nacimiento, sexo, obra_social, mail, medico_id, importante
@@ -92,12 +108,12 @@ export class PacienteRepository {
     `, [
       nombre,
       documento,
-      new Date(nacimiento),
-      sexo,
-      obra_social,
-      mail,
-      medico_id,
-      importante || false
+      fechaNacimiento,
+      sexo || null,
+      obra_social || null,
+      mail || null,
+      medico_id || null,
+      importante || null
     ]);
 
     return result.rows[0];
@@ -120,8 +136,17 @@ export class PacienteRepository {
     }
     
     if (updateData.nacimiento !== undefined) {
-      fields.push(`nacimiento = $${paramCount++}`);
-      values.push(new Date(updateData.nacimiento));
+      // Validar fecha antes de usarla
+      try {
+        const fecha = new Date(updateData.nacimiento);
+        if (isNaN(fecha.getTime())) {
+          throw new Error('Fecha de nacimiento inválida');
+        }
+        fields.push(`nacimiento = $${paramCount++}`);
+        values.push(fecha);
+      } catch (error) {
+        throw new Error(`Error al procesar fecha de nacimiento: ${updateData.nacimiento}`);
+      }
     }
     
     if (updateData.sexo !== undefined) {

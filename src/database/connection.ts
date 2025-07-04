@@ -69,7 +69,7 @@ class PostgreSQLConnection implements DatabaseConnection {
       logger.info('🔗 Conexión PostgreSQL exitosa:', result.rows[0].now);
       return true;
     } catch (error) {
-      logger.error('❌ Error conectando a PostgreSQL:', error);
+      logger.warn('⚠️  PostgreSQL no disponible, usando SQLite como fallback');
       return false;
     }
   }

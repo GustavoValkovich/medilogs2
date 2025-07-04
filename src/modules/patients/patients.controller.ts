@@ -196,22 +196,24 @@ export class PatientsController {
 export const patientValidationSchemas = {
   create: {
     nombre: { required: true, type: 'string' as const, minLength: 2, maxLength: 100 },
-    apellido: { required: true, type: 'string' as const, minLength: 2, maxLength: 100 },
-    fecha_nacimiento: { required: true, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
-    telefono: { required: false, type: 'string' as const, maxLength: 20 },
-    email: { required: false, type: 'string' as const, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-    direccion: { required: false, type: 'string' as const, maxLength: 200 },
-    importante: { required: false, type: 'boolean' as const }
+    documento: { required: true, type: 'string' as const, minLength: 5, maxLength: 20 },
+    nacimiento: { required: true, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
+    sexo: { required: false, type: 'string' as const, values: ['M', 'F', 'O'] },
+    obra_social: { required: false, type: 'string' as const, maxLength: 100 },
+    mail: { required: false, type: 'string' as const, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+    medico_id: { required: false, type: 'number' as const },
+    importante: { required: false, type: 'string' as const, maxLength: 200 }
   },
   
   update: {
     nombre: { required: false, type: 'string' as const, minLength: 2, maxLength: 100 },
-    apellido: { required: false, type: 'string' as const, minLength: 2, maxLength: 100 },
-    fecha_nacimiento: { required: false, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
-    telefono: { required: false, type: 'string' as const, maxLength: 20 },
-    email: { required: false, type: 'string' as const, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-    direccion: { required: false, type: 'string' as const, maxLength: 200 },
-    importante: { required: false, type: 'boolean' as const }
+    documento: { required: false, type: 'string' as const, minLength: 5, maxLength: 20 },
+    nacimiento: { required: false, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
+    sexo: { required: false, type: 'string' as const, values: ['M', 'F', 'O'] },
+    obra_social: { required: false, type: 'string' as const, maxLength: 100 },
+    mail: { required: false, type: 'string' as const, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+    medico_id: { required: false, type: 'number' as const },
+    importante: { required: false, type: 'string' as const, maxLength: 200 }
   },
   
   query: {

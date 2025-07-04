@@ -1,5 +1,6 @@
 import net from 'net';
 import { config, validateConfig, isDevelopment } from './config';
+import { testConnection } from '../database/connection';
 import { logger } from '../shared/utils/logger';
 
 export interface ServerInstance {
@@ -193,3 +194,49 @@ export const setupGracefulShutdown = (serverInstance: ServerInstance): void => {
     process.exit(1);
   });
 };
+
+/**
+ * Función principal para inicializar el servidor
+ */
+const main = async (): Promise<void> => {
+  try {
+    logger.info('🚀 Iniciando MediLogs2 Server...');
+    
+    // Validar configuración
+    validateConfig();
+    
+    // Importar y configurar la aplicación
+    const { createApp } = await import('./app');
+    
+    // Crear la aplicación Express
+    const app = createApp();
+    
+    // Probar la conexión a la base de datos
+    logger.info('🔍 Probando conexión a la base de datos...');
+    const dbConnected = await testConnection();
+    
+    if (!dbConnected) {
+      logger.warn('⚠️  Base de datos no disponible, continuando con SQLite...');
+    }
+    
+    // Iniciar el servidor
+    const serverInstance = await startServer(app);
+    
+    // Configurar cierre graceful
+    setupGracefulShutdown(serverInstance);
+    
+    logger.info('✅ MediLogs2 Server iniciado exitosamente');
+    
+  } catch (error) {
+    logger.error('❌ Error iniciando el servidor:', error);
+    process.exit(1);
+  }
+};
+
+// Ejecutar si es el módulo principal
+if (require.main === module) {
+  main().catch(error => {
+    logger.error('❌ Error fatal:', error);
+    process.exit(1);
+  });
+}

@@ -58,6 +58,23 @@ class ConsultaRepository {
     }
     async create(consultaData) {
         const { paciente_id, fecha_historia, historia, imagen } = consultaData;
+        let fechaProcessed;
+        if (fecha_historia) {
+            fechaProcessed = new Date(fecha_historia);
+            if (isNaN(fechaProcessed.getTime())) {
+                throw new Error(`Fecha inválida: ${fecha_historia}. Formato esperado: YYYY-MM-DD`);
+            }
+        }
+        else {
+            fechaProcessed = new Date();
+        }
+        const pacienteCheck = await (0, database_1.query)('SELECT id FROM paciente WHERE id = $1', [paciente_id]);
+        if (pacienteCheck.rows.length === 0) {
+            throw new Error(`Paciente con ID ${paciente_id} no encontrado`);
+        }
+        if (!historia || historia.trim().length < 5) {
+            throw new Error('La historia médica es requerida y debe tener al menos 5 caracteres');
+        }
         const result = await (0, database_1.query)(`
       INSERT INTO consulta (
         paciente_id, fecha_historia, historia, imagen
@@ -65,8 +82,8 @@ class ConsultaRepository {
       RETURNING *
     `, [
             paciente_id,
-            new Date(fecha_historia),
-            historia,
+            fechaProcessed,
+            historia.trim(),
             imagen
         ]);
         return result.rows[0];
@@ -76,23 +93,34 @@ class ConsultaRepository {
         const values = [];
         let paramCount = 1;
         if (updateData.paciente_id !== undefined) {
+            const pacienteCheck = await (0, database_1.query)('SELECT id FROM paciente WHERE id = $1', [updateData.paciente_id]);
+            if (pacienteCheck.rows.length === 0) {
+                throw new Error(`Paciente con ID ${updateData.paciente_id} no encontrado`);
+            }
             fields.push(`paciente_id = $${paramCount++}`);
             values.push(updateData.paciente_id);
         }
         if (updateData.fecha_historia !== undefined) {
+            const fechaProcessed = new Date(updateData.fecha_historia);
+            if (isNaN(fechaProcessed.getTime())) {
+                throw new Error(`Fecha inválida: ${updateData.fecha_historia}. Formato esperado: YYYY-MM-DD`);
+            }
             fields.push(`fecha_historia = $${paramCount++}`);
-            values.push(new Date(updateData.fecha_historia));
+            values.push(fechaProcessed);
         }
         if (updateData.historia !== undefined) {
+            if (updateData.historia.trim().length < 5) {
+                throw new Error('La historia médica debe tener al menos 5 caracteres');
+            }
             fields.push(`historia = $${paramCount++}`);
-            values.push(updateData.historia);
+            values.push(updateData.historia.trim());
         }
         if (updateData.imagen !== undefined) {
             fields.push(`imagen = $${paramCount++}`);
             values.push(updateData.imagen);
         }
         if (fields.length === 0) {
-            throw new Error('No fields to update');
+            throw new Error('No hay campos para actualizar');
         }
         values.push(id);
         const result = await (0, database_1.query)(`

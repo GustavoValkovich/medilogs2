@@ -220,20 +220,16 @@ export class ConsultationsController {
 export const consultationValidationSchemas = {
   create: {
     paciente_id: { required: true, type: 'number' as const },
-    fecha: { required: true, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
-    motivo: { required: true, type: 'string' as const, minLength: 5, maxLength: 500 },
-    diagnostico: { required: false, type: 'string' as const, maxLength: 1000 },
-    tratamiento: { required: false, type: 'string' as const, maxLength: 1000 },
-    observaciones: { required: false, type: 'string' as const, maxLength: 1000 }
+    fecha_historia: { required: true, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
+    historia: { required: true, type: 'string' as const, minLength: 5, maxLength: 2000 },
+    imagen: { required: false, type: 'string' as const, maxLength: 500 }
   },
   
   update: {
     paciente_id: { required: false, type: 'number' as const },
-    fecha: { required: false, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
-    motivo: { required: false, type: 'string' as const, minLength: 5, maxLength: 500 },
-    diagnostico: { required: false, type: 'string' as const, maxLength: 1000 },
-    tratamiento: { required: false, type: 'string' as const, maxLength: 1000 },
-    observaciones: { required: false, type: 'string' as const, maxLength: 1000 }
+    fecha_historia: { required: false, type: 'string' as const, pattern: /^\d{4}-\d{2}-\d{2}$/ },
+    historia: { required: false, type: 'string' as const, minLength: 5, maxLength: 2000 },
+    imagen: { required: false, type: 'string' as const, maxLength: 500 }
   },
   
   query: {
