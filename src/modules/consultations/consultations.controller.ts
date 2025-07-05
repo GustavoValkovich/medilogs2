@@ -212,6 +212,54 @@ export class ConsultationsController {
     logger.info(`Resultados de búsqueda: ${consultas.length}`);
     res.json(response);
   });
+
+  /**
+   * Crear nueva consulta con archivos
+   */
+  createConsultationWithFiles = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const consultaData: CreateConsultaRequest = req.body;
+    const files = req.files as Express.Multer.File[];
+
+    logger.info('Creando nueva consulta con archivos', { 
+      pacienteId: consultaData.paciente_id,
+      fileCount: files?.length || 0
+    });
+
+    // Crear la consulta primero
+    const nuevaConsulta = await consultaRepository.create(consultaData);
+
+    // Si hay archivos, asociarlos con la consulta
+    if (files && files.length > 0) {
+      const fileUrls = files.map(file => `/uploads/${file.filename}`);
+      
+      // Actualizar la consulta con las URLs de los archivos
+      // Por ahora guardamos como JSON en el campo imagen
+      const updatedConsulta = await consultaRepository.update(nuevaConsulta.id, {
+        imagen: JSON.stringify(fileUrls)
+      });
+
+      logger.info('Archivos asociados a la consulta', { 
+        consultaId: nuevaConsulta.id,
+        files: fileUrls
+      });
+
+      const response: ApiResponse<ConsultaCompleta> = {
+        success: true,
+        data: updatedConsulta!,
+        message: `Consulta creada exitosamente con ${files.length} archivo(s)`
+      };
+
+      res.status(201).json(response);
+    } else {
+      const response: ApiResponse<ConsultaCompleta> = {
+        success: true,
+        data: nuevaConsulta,
+        message: 'Consulta creada exitosamente'
+      };
+
+      res.status(201).json(response);
+    }
+  });
 }
 
 /**

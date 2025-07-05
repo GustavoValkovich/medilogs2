@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ConsultationsController, consultationValidationSchemas } from './consultations.controller';
-import { validateBody, validateQuery, validateParams, commonSchemas, sanitizeInput } from '../../shared/middleware';
+import { validateBody, validateQuery, validateParams, commonSchemas, sanitizeInput, uploadConsultationFiles } from '../../shared/middleware';
 
 const router = Router();
 const controller = new ConsultationsController();
@@ -24,6 +24,15 @@ router.get('/',
 router.post('/', 
   validateBody(consultationValidationSchemas.create),
   controller.createConsultation
+);
+
+/**
+ * POST /consultations/with-files
+ * Crear nueva consulta con archivos adjuntos
+ */
+router.post('/with-files',
+  uploadConsultationFiles,
+  controller.createConsultationWithFiles
 );
 
 /**

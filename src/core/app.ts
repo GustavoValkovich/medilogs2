@@ -3,12 +3,13 @@ import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
 import { config, isDevelopment } from './config';
 import { testConnection } from '../database/connection';
 import { logger } from '../shared/utils/logger';
 import { errorHandler, notFoundHandler } from '../shared/middleware';
 import { requestLogger } from '../shared/middleware';
-import { patientsRouter, doctorsRouter, consultationsRouter, authRouter } from '../modules';
+import { patientsRouter, doctorsRouter, consultationsRouter, authRouter, filesRouter } from '../modules';
 
 /**
  * Crear y configurar la aplicación Express
@@ -47,6 +48,12 @@ export const createApp = (): express.Application => {
   // Body parsers
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+  
+  // ==================== ARCHIVOS ESTÁTICOS ====================
+  
+  // Servir archivos de uploads
+  const uploadsPath = path.join(__dirname, '../../uploads');
+  app.use('/uploads', express.static(uploadsPath));
   
   // ==================== MIDDLEWARE DE LOGGING ====================
   
@@ -97,6 +104,8 @@ export const createApp = (): express.Application => {
         patients: `${config.apiPrefix}/patients`,
         doctors: `${config.apiPrefix}/doctors`,
         consultations: `${config.apiPrefix}/consultations`,
+        files: `${config.apiPrefix}/files`,
+        uploads: '/uploads',
         // Rutas legacy (compatibilidad)
         pacientes: `${config.apiPrefix}/pacientes`,
         medicos: `${config.apiPrefix}/medicos`,
@@ -109,7 +118,8 @@ export const createApp = (): express.Application => {
         '🚀 Gestión automática de puertos',
         '💾 Base de datos flexible (PostgreSQL/SQLite)',
         '🧩 Arquitectura modular',
-        '⚡ Compresión y optimizaciones'
+        '⚡ Compresión y optimizaciones',
+        '📁 Upload de archivos (JPG, PNG, PDF) <1MB'
       ],
       documentation: 'Sistema de gestión médica optimizado - MediLogs2'
     });
@@ -128,6 +138,9 @@ export const createApp = (): express.Application => {
   
   // Rutas de consultas
   app.use(`${config.apiPrefix}/consultations`, consultationsRouter);
+  
+  // Rutas de archivos
+  app.use(`${config.apiPrefix}/files`, filesRouter);
   
   // ==================== RUTAS DE COMPATIBILIDAD ====================
   // Mantener rutas legacy para compatibilidad con Postman existente

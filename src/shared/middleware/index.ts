@@ -22,3 +22,16 @@ export {
   commonSchemas,
   type ValidationSchema
 } from './validation';
+
+// Middlewares de upload de archivos
+export {
+  uploadConsultationFiles,
+  uploadSingleFile,
+  getFileInfo,
+  deleteFile,
+  fileExists,
+  UPLOAD_CONSTANTS
+} from './fileUpload';
+
+// Middleware de manejo de errores de multer
+export { multerErrorHandler } from './multerErrorHandler';

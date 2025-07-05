@@ -18,6 +18,9 @@ export * from './doctors';
 // Módulo de Consultas
 export * from './consultations';
 
+// Módulo de Archivos
+export * from './files';
+
 // Módulo de Autenticación
 export * from './auth';
 
